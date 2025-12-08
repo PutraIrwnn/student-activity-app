@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+vscode-file://vscode-app/C:/Users/PUTRA/.gemini/antigravity/brain/d3446bf2-6e70-4b8f-9712-a6d95630c213/student_app_logo_1765189511638.png
