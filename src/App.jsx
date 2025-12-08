@@ -114,7 +114,6 @@ const Dashboard = () => {
           {/* Weather Card */}
           <div className="glass-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
                 {(() => {
                   if (!weather) return <Sun color="#F59E0B" />;
                   const code = weather.weatherCode;
