@@ -34,23 +34,33 @@ const Header = ({ onOpenLocation }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <ClockWidget />
 
-        {weather && (
-          <button 
-            onClick={onOpenLocation}
-            className="glass-card" 
-            style={{ padding: '0.8rem 1.2rem', display: 'flex', alignItems: 'center', gap: '1rem', borderRadius: '50px', cursor: 'pointer', border: '2px solid transparent' }}
-          >
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', lineHeight: 1 }}>{weather.temperature}°</div>
-              <div style={{ fontSize: '0.7rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
-                <MapPin size={10} /> {location ? location.name.split(',')[0] : 'Lokasi'}
+        <button 
+          onClick={onOpenLocation}
+          className="glass-card" 
+          style={{ padding: '0.8rem 1.2rem', display: 'flex', alignItems: 'center', gap: '1rem', borderRadius: '50px', cursor: 'pointer', border: '2px solid transparent' }}
+        >
+          {weather ? (
+            <>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', lineHeight: 1 }}>{weather.temperature}°</div>
+                <div style={{ fontSize: '0.7rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
+                  <MapPin size={10} /> {location ? location.name.split(',')[0] : 'Lokasi'}
+                </div>
               </div>
-            </div>
-            <div style={{ fontSize: '2rem' }}>
-                {weather.weatherCode > 50 ? '🌧️' : '🌤️'}
-            </div>
-          </button>
-        )}
+              <div style={{ fontSize: '2rem' }}>
+                  {weather.weatherCode > 50 ? '🌧️' : '🌤️'}
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Set Lokasi</div>
+                <div style={{ fontSize: '0.7rem', opacity: 0.8 }}>Klik disini</div>
+              </div>
+              <MapPin size={24} color="#F59E0B" />
+            </>
+          )}
+        </button>
       </div>
     </header>
   );
