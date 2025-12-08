@@ -7,7 +7,10 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [weather, setWeather] = useState(null);
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState(() => {
+    const saved = localStorage.getItem('user_location');
+    return saved ? JSON.parse(saved) : null;
+  });
   const [loadingWeather, setLoadingWeather] = useState(false);
   const [showDailyPrompt, setShowDailyPrompt] = useState(false);
 
@@ -68,7 +71,8 @@ export const AppProvider = ({ children }) => {
   }, [location]);
 
   const updateLocation = (newLoc) => {
-    setLocation(newLoc); // { lat, long, name }
+    setLocation(newLoc);
+    localStorage.setItem('user_location', JSON.stringify(newLoc));
   };
 
   // Sync Todos to storage
