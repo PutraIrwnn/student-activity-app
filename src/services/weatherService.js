@@ -32,7 +32,7 @@ export const weatherService = {
     if (!lat || !long) return null;
     try {
       const response = await fetch(
-        `${FORECAST_URL}?latitude=${lat}&longitude=${long}&current=temperature_2m,weather_code&daily=uv_index_max&timezone=auto`
+        `${FORECAST_URL}?latitude=${lat}&longitude=${long}&current=temperature_2m,weather_code,is_day&daily=uv_index_max&timezone=auto`
       );
       
       if (!response.ok) throw new Error('Weather fetch failed');
@@ -44,6 +44,7 @@ export const weatherService = {
       return {
         temperature: data.current.temperature_2m,
         weatherCode: code,
+        isDay: data.current.is_day, // 1 = Day, 0 = Night
         description,
         uvIndexMax: data.daily.uv_index_max[0] || 0,
       };

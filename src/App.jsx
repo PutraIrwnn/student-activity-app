@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
-import { LayoutDashboard, Sun, CloudSun, MapPin, CloudRain, Wind } from 'lucide-react';
+import { LayoutDashboard, Sun, CloudSun, MapPin, CloudRain, Wind, Moon, CloudDrizzle, CloudLightning, Cloud } from 'lucide-react';
 import DailyPromptModal from './components/DailyPromptModal';
 import TodoList from './components/TodoList';
 import PomodoroTimer from './components/PomodoroTimer';
@@ -48,7 +48,7 @@ const Header = ({ onOpenLocation }) => {
                 </div>
               </div>
               <div style={{ fontSize: '2rem' }}>
-                  {weather.weatherCode > 50 ? '🌧️' : '🌤️'}
+                  {weather.weatherCode > 50 ? '🌧️' : (weather.isDay ? 'sunny' ? '☀️' : '🌤️' : '🌙')}
               </div>
             </>
           ) : (
@@ -114,7 +114,24 @@ const Dashboard = () => {
           {/* Weather Card */}
           <div className="glass-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                {weather && weather.weatherCode > 50 ? <CloudRain color="#3B82F6" /> : <Sun color="#F59E0B" />}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                {(() => {
+                  if (!weather) return <Sun color="#F59E0B" />;
+                  const code = weather.weatherCode;
+                  const isDay = weather.isDay;
+
+                  // Thunderstorm (Badai)
+                  if (code >= 95) return <CloudLightning color="#7C3AED" />;
+                  // Rain (Hujan)
+                  if (code >= 60 && code < 70) return <CloudRain color="#3B82F6" />;
+                  // Drizzle (Gerimis)
+                  if (code >= 50 && code < 60) return <CloudDrizzle color="#60A5FA" />;
+                  // Cloudy (Berawan/Mendung)
+                  if (code > 2 && code < 50) return <Cloud color="#9CA3AF" />;
+                  
+                  // Clear/Partly Cloudy (Cerah) - Day vs Night
+                  return isDay ? <Sun color="#F59E0B" /> : <Moon color="#6E56CF" />;
+                })()}
                 <h2 style={{ fontSize: '1.2rem', margin: 0 }}>Weather Insight</h2>
               </div>
               
