@@ -30,20 +30,23 @@ export const AppProvider = ({ children }) => {
   }, []);
   
   // separate effect for initial location to allow manual override later
+  // separate effect for initial location to allow manual override later
   useEffect(() => {
-     // Check if user has saved manual location previously (could be added to storageService later)
-     // For now, default to GPS if no manual set
-     if (navigator.geolocation) {
+     // Check directly from storage to avoid stale state closure issues
+     const savedLoc = localStorage.getItem('user_location');
+     
+     // Only run GPS if WAAAAY empty (no saved location)
+     if (!savedLoc && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // Only set if we haven't set it yet (or add a 'useGPS' flag)
-          if (!location) { 
-             setLocation({
+             const gpsLoc = {
                 lat: position.coords.latitude,
                 long: position.coords.longitude,
-                name: 'Lokasi Saya'
-             });
-          }
+                name: 'Lokasi Saya (GPS)'
+             };
+             setLocation(gpsLoc);
+             // Optional: Save GPS as default? 
+             // localStorage.setItem('user_location', JSON.stringify(gpsLoc)); 
         },
         (error) => {
           console.error("Geolocation error:", error);
