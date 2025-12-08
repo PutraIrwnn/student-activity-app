@@ -137,8 +137,12 @@ const Dashboard = () => {
               {loadingWeather ? (
                 <p>Detecting weather...</p>
               ) : weather ? (
-                 <div>
-                  </div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+                      {weather.description}
+                    </div>
+                    <p style={{ margin: '0 0 1rem 0' }}>
+                      Indeks UV Maksimal: <strong>{weather.uvIndexMax}</strong>
+                    </p>
                   
                   {(() => {
                     const h = new Date().getHours();
