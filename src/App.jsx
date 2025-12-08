@@ -138,39 +138,81 @@ const Dashboard = () => {
                 <p>Detecting weather...</p>
               ) : weather ? (
                  <div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-                      {weather.description}
-                    </div>
-                    <p style={{ margin: '0 0 1rem 0' }}>
-                      Indeks UV Maksimal: <strong>{weather.uvIndexMax}</strong>
-                    </p>
+                  </div>
+                  
+                  {(() => {
+                    const h = new Date().getHours();
+                    // Logika Waktu & UV
                     
-                    {isUVRisky ? (
-                      <div style={{ 
-                        padding: '1rem', 
-                        background: 'rgba(239, 68, 68, 0.1)', 
-                        border: '1px solid rgba(239, 68, 68, 0.2)',
-                        color: '#B91C1C', 
-                        borderRadius: '12px',
-                        fontWeight: '600',
-                        display: 'flex', gap: '8px', alignItems: 'center'
-                      }}>
-                        ⚠️ Warning UV Tinggi!<br/>Wajib pakai Sunscreen.
-                      </div>
-                    ) : (
+                    // 1. Malam (18.00 - 04.59) -> Skincare Malam
+                    if (h >= 18 || h < 5) {
+                        return (
+                           <div style={{ 
+                            padding: '1rem', 
+                            background: 'rgba(99, 102, 241, 0.1)', 
+                            border: '1px solid rgba(99, 102, 241, 0.2)',
+                            color: '#4F46E5', borderRadius: '12px', fontWeight: '600', display: 'flex', gap: '8px', alignItems: 'center'
+                          }}>
+                            🌙 Sudah malam.<br/>Jangan lupa cuci muka & pakai pelembab! ✨
+                          </div>
+                        );
+                    }
+                    
+                    // 2. Pagi (05.00 - 08.59) -> Rutinitas Pagi
+                    if (h >= 5 && h < 9) {
+                        return (
+                           <div style={{ 
+                            padding: '1rem', 
+                            background: 'rgba(16, 185, 129, 0.1)', 
+                            border: '1px solid rgba(16, 185, 129, 0.2)',
+                            color: '#059669', borderRadius: '12px', fontWeight: '600', display: 'flex', gap: '8px', alignItems: 'center'
+                          }}>
+                            🌅 Selamat pagi!<br/>Sudah cuci muka & gosok gigi? 🪥
+                          </div>
+                        );
+                    }
+
+                    // 3. Siang (09.00 - 15.59) -> Cek UV
+                    if (h >= 9 && h < 16) {
+                        const isHighUV = weather.uvIndexMax >= 3; // Standard UV alert start
+                        if (isHighUV) {
+                            return (
+                               <div style={{ 
+                                padding: '1rem', 
+                                background: 'rgba(239, 68, 68, 0.1)', 
+                                border: '1px solid rgba(239, 68, 68, 0.2)',
+                                color: '#B91C1C', borderRadius: '12px', fontWeight: '600', display: 'flex', gap: '8px', alignItems: 'center'
+                              }}>
+                                ⚠️ UV Tinggi ({weather.uvIndexMax})!<br/>Wajib pakai Sunscreen sekarang. 🧴
+                              </div>
+                            );
+                        } else {
+                            return (
+                               <div style={{ 
+                                padding: '1rem', 
+                                background: 'rgba(245, 158, 11, 0.1)', 
+                                border: '1px solid rgba(245, 158, 11, 0.2)',
+                                color: '#D97706', borderRadius: '12px', fontWeight: '600', display: 'flex', gap: '8px', alignItems: 'center'
+                              }}>
+                                ✅ UV ({weather.uvIndexMax}) Aman.<br/>Bebas beraktivitas outdoor! 🏃
+                              </div>
+                            );
+                        }
+                    }
+
+                    // 4. Sore (16.00 - 17.59) -> UV Turun
+                    return (
                        <div style={{ 
                         padding: '1rem', 
                         background: 'rgba(16, 185, 129, 0.1)', 
                         border: '1px solid rgba(16, 185, 129, 0.2)',
-                        color: '#047857', 
-                        borderRadius: '12px',
-                        fontWeight: '600',
-                        display: 'flex', gap: '8px', alignItems: 'center'
+                        color: '#047857', borderRadius: '12px', fontWeight: '600', display: 'flex', gap: '8px', alignItems: 'center'
                       }}>
-                        {isEvening ? '🌙 Matahari rendah.' : '✅ UV Aman.'} <br/>
-                        {isEvening ? 'No sunscreen needed.' : 'Have fun!'}
+                        🌥️ Matahari turun.<br/>Aman tanpa sunscreen, enjoy sore! ☕
                       </div>
-                    )}
+                    );
+
+                  })()}
                  </div>
               ) : (
                  <p style={{ opacity: 0.6, fontStyle: 'italic' }}>
