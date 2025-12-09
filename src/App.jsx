@@ -13,7 +13,7 @@ const Header = ({ onOpenLocation }) => {
   const { weather, location } = useApp();
   
   return (
-    <header style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+    <header className="app-header">
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <div style={{ 
           background: 'rgba(255,255,255,0.8)', padding: '0.8rem', borderRadius: '16px', 
@@ -31,23 +31,25 @@ const Header = ({ onOpenLocation }) => {
         </div>
       </div>
       
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div className="header-right">
         <ClockWidget />
 
         <button 
           onClick={onOpenLocation}
-          className="glass-card" 
-          style={{ padding: '0.8rem 1.2rem', display: 'flex', alignItems: 'center', gap: '1rem', borderRadius: '50px', cursor: 'pointer', border: '2px solid transparent' }}
+          className="glass-card weather-btn" 
         >
           {weather ? (
             <>
-              <div style={{ textAlign: 'right' }}>
+              <div style={{ textAlign: 'right', overflow: 'hidden' }}>
                 <div style={{ fontSize: '1.5rem', fontWeight: 'bold', lineHeight: 1 }}>{weather.temperature}°</div>
-                <div style={{ fontSize: '0.7rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px' }}>
-                  <MapPin size={10} /> {location ? location.name.split(',')[0] : 'Lokasi'}
+                <div className="location-text">
+                  <MapPin size={10} style={{ flexShrink: 0 }} /> 
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {location ? location.name.split(',')[0] : 'Lokasi'}
+                  </span>
                 </div>
               </div>
-              <div style={{ fontSize: '2rem' }}>
+              <div style={{ fontSize: '2rem', flexShrink: 0 }}>
                   {weather.weatherCode > 50 ? '🌧️' : (weather.isDay ? 'sunny' ? '☀️' : '🌤️' : '🌙')}
               </div>
             </>
