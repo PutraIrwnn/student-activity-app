@@ -105,3 +105,42 @@ input:focus {
   border-color: #764ba2;
   outline: none;
 }
+
+/* --- New Dashboard Layout (Grid) --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Mobile Default */
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.dashboard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Desktop: 2 Fixed Columns */
+@media (min-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .dashboard-column {
+    gap: 2rem;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem; /* Less padding on mobile */
+  }
+  
+  h1 { font-size: 1.25rem !important; }
+  
+  .glass-card {
+    padding: 1.25rem; /* Compact card padding */
+  }
+}

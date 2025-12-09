@@ -84,32 +84,17 @@ const Dashboard = () => {
       {/* Top Priority Section */}
       <PriorityWidget />
 
-      {/* Main Layout: Two Independent Columns to prevent vertical gaps */}
-      <div style={{ 
-        display: 'flex', 
-        flexWrap: 'wrap', 
-        gap: '2rem', 
-        alignItems: 'flex-start' 
-      }}>
+      {/* Main Layout: CSS Grid for robust alignment */}
+      <div className="dashboard-grid">
         
         {/* LEFT COLUMN: Schedule & Todo */}
-        <div style={{ 
-          flex: '1 1 350px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '2rem' 
-        }}>
+        <div className="dashboard-column">
           <ClassSchedule />
           <TodoList />
         </div>
 
         {/* RIGHT COLUMN: Weather & Pomodoro */}
-        <div style={{ 
-          flex: '1 1 350px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '2rem' 
-        }}>
+        <div className="dashboard-column">
           
           {/* Weather Card */}
           <div className="glass-card">
