@@ -29,7 +29,7 @@ const ClockWidget = () => {
   };
 
   return (
-    <div className="glass-card" style={{ 
+    <div className="glass-card clock-widget" style={{ 
       padding: '0.8rem 1.5rem', display: 'flex', flexDirection: 'column', 
       alignItems: 'flex-start', justifyContent: 'center', minWidth: '180px'
     }}>
