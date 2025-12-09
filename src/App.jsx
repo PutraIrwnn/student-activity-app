@@ -219,7 +219,7 @@ const Dashboard = () => {
 
                     })()}
                   </>
-                 </div>
+
               ) : (
                  <p style={{ opacity: 0.6, fontStyle: 'italic' }}>
                    Aktifkan lokasi atau klik widget cuaca di atas untuk memilih kota manual.
