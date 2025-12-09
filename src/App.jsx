@@ -149,8 +149,8 @@ const Dashboard = () => {
                       const h = new Date().getHours();
                       // Logika Waktu & UV
                       
-                      // 1. Malam (18.00 - 04.59) -> Skincare Malam
-                      if (h >= 18 || h < 5) {
+                      // 1. Malam (Berdasarkan API Cuaca atau Jam Sistem) -> Prioritas Tertinggi
+                      if (weather.isDay === 0 || h >= 18 || h < 5) {
                           return (
                              <div style={{ 
                               padding: '1rem', 
